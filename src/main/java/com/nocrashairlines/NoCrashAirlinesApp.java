@@ -214,21 +214,36 @@ public class NoCrashAirlinesApp {
     // UC-1: Search Flights
     private void searchFlights() {
         System.out.println("\n=== Search Flights ===");
+        System.out.println("Available cities: Toronto, Vancouver, Montreal, Calgary");
         System.out.print("Origin: ");
         String origin = scanner.nextLine();
         System.out.print("Destination: ");
         String destination = scanner.nextLine();
-        
+
         LocalDateTime searchDate = LocalDateTime.now().plusDays(1);
         List<Flight> flights = flightService.searchFlights(origin, destination, searchDate);
-        
+
         if (flights.isEmpty()) {
-            System.out.println("No flights found for the given criteria.");
+            System.out.println("\n❌ No flights found for " + origin + " → " + destination);
+            System.out.println("Try searching for: Toronto → Vancouver, Toronto → Montreal, or Vancouver → Calgary");
         } else {
-            System.out.println("\nAvailable Flights:");
-            for (Flight flight : flights) {
-                System.out.println(flight);
+            System.out.println("\n✅ Found " + flights.size() + " flight(s):\n");
+            for (int i = 0; i < flights.size(); i++) {
+                Flight f = flights.get(i);
+                System.out.println((i + 1) + ". Flight " + f.getFlightNumber());
+                System.out.println("   Route: " + f.getOrigin() + " → " + f.getDestination());
+                System.out.println("   Departure: " + f.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Arrival: " + f.getArrivalTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Duration: " + f.getDurationInMinutes() / 60 + " hours");
+                System.out.println("   Available Seats: " + f.getAvailableSeats() + "/" + f.getTotalSeats());
+                System.out.println("   Gate: " + (f.getGate() != null ? f.getGate() : "TBA"));
+                System.out.println("   Prices:");
+                System.out.println("     - Economy: $" + f.getClassPrice("ECONOMY"));
+                System.out.println("     - Business: $" + f.getClassPrice("BUSINESS"));
+                System.out.println("     - First Class: $" + f.getClassPrice("FIRST_CLASS"));
+                System.out.println();
             }
+            System.out.println("💡 Tip: Use option 4 (Book Ticket) to book one of these flights!");
         }
     }
     
@@ -238,45 +253,122 @@ public class NoCrashAirlinesApp {
             System.out.println("Please login first!");
             return;
         }
-        
+
         try {
             System.out.println("\n=== Book Ticket ===");
-            System.out.print("Flight ID: ");
-            String flightId = scanner.nextLine();
-            System.out.print("Travel Class (ECONOMY/BUSINESS/FIRST_CLASS): ");
-            String travelClass = scanner.nextLine();
-            
+
+            // First, let user search for flights
+            System.out.print("Origin City: ");
+            String origin = scanner.nextLine();
+            System.out.print("Destination City: ");
+            String destination = scanner.nextLine();
+
+            LocalDateTime searchDate = LocalDateTime.now().plusDays(1);
+            List<Flight> flights = flightService.searchFlights(origin, destination, searchDate);
+
+            if (flights.isEmpty()) {
+                System.out.println("\nNo flights found for " + origin + " → " + destination);
+                System.out.println("Please try different cities.");
+                return;
+            }
+
+            // Display available flights with numbers
+            System.out.println("\n=== Available Flights ===");
+            for (int i = 0; i < flights.size(); i++) {
+                Flight f = flights.get(i);
+                System.out.println("\n" + (i + 1) + ". Flight " + f.getFlightNumber());
+                System.out.println("   Route: " + f.getOrigin() + " → " + f.getDestination());
+                System.out.println("   Departure: " + f.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Arrival: " + f.getArrivalTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Available Seats: " + f.getAvailableSeats() + "/" + f.getTotalSeats());
+                System.out.println("   Prices:");
+                System.out.println("     - Economy: $" + f.getClassPrice("ECONOMY"));
+                System.out.println("     - Business: $" + f.getClassPrice("BUSINESS"));
+                System.out.println("     - First Class: $" + f.getClassPrice("FIRST_CLASS"));
+            }
+
+            // Let user select a flight
+            System.out.print("\nSelect flight number (1-" + flights.size() + ") or 0 to cancel: ");
+            int flightChoice = getIntInput();
+
+            if (flightChoice == 0) {
+                System.out.println("Booking cancelled.");
+                return;
+            }
+
+            if (flightChoice < 1 || flightChoice > flights.size()) {
+                System.out.println("Invalid flight selection.");
+                return;
+            }
+
+            Flight selectedFlight = flights.get(flightChoice - 1);
+
+            // Select travel class
+            System.out.print("\nTravel Class (1=ECONOMY, 2=BUSINESS, 3=FIRST_CLASS): ");
+            int classChoice = getIntInput();
+            String travelClass;
+            switch (classChoice) {
+                case 1 -> travelClass = "ECONOMY";
+                case 2 -> travelClass = "BUSINESS";
+                case 3 -> travelClass = "FIRST_CLASS";
+                default -> {
+                    System.out.println("Invalid class selection. Defaulting to ECONOMY.");
+                    travelClass = "ECONOMY";
+                }
+            }
+
+            // Create booking
             Booking booking = bookingService.createBooking(
-                currentPassenger.getUserId(), flightId, currentPassenger.getName(),
+                currentPassenger.getUserId(), selectedFlight.getFlightId(), currentPassenger.getName(),
                 currentPassenger.getEmail(), currentPassenger.getPhoneNumber(),
                 currentPassenger.getPassportNumber(), travelClass
             );
-            
-            System.out.println("\nBooking created successfully!");
+
+            System.out.println("\n✅ Booking created successfully!");
             System.out.println("Booking ID: " + booking.getBookingId());
+            System.out.println("Flight: " + selectedFlight.getFlightNumber());
+            System.out.println("Seat: " + booking.getSeatNumber());
             System.out.println("Amount: $" + booking.getTotalAmount());
-            
+
             // Process payment
             System.out.print("\nProceed with payment? (yes/no): ");
             String proceed = scanner.nextLine();
-            
+
             if (proceed.equalsIgnoreCase("yes")) {
-                System.out.print("Payment Method (CREDIT_CARD/DEBIT_CARD/DIGITAL_WALLET): ");
-                String paymentMethod = scanner.nextLine();
+                System.out.println("\nPayment Methods:");
+                System.out.println("1. Credit Card");
+                System.out.println("2. Debit Card");
+                System.out.println("3. Digital Wallet");
+                System.out.print("Select payment method (1-3): ");
+                int paymentChoice = getIntInput();
+
+                String paymentMethod;
+                switch (paymentChoice) {
+                    case 1 -> paymentMethod = "CREDIT_CARD";
+                    case 2 -> paymentMethod = "DEBIT_CARD";
+                    case 3 -> paymentMethod = "DIGITAL_WALLET";
+                    default -> {
+                        System.out.println("Invalid selection. Using Credit Card.");
+                        paymentMethod = "CREDIT_CARD";
+                    }
+                }
+
                 System.out.print("Card Last 4 Digits: ");
                 String cardDigits = scanner.nextLine();
-                
+
                 Payment payment = paymentService.processPayment(
                     booking.getBookingId(), currentPassenger.getUserId(),
                     paymentMethod, cardDigits
                 );
-                
-                System.out.println("\nPayment successful!");
+
+                System.out.println("\n✅ Payment successful!");
                 System.out.println("Transaction Reference: " + payment.getTransactionReference());
                 System.out.println("E-ticket has been sent to your email!");
+            } else {
+                System.out.println("\nBooking saved but not confirmed. Please complete payment to confirm.");
             }
         } catch (BookingException | PaymentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
     
