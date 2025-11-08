@@ -1,0 +1,922 @@
+﻿Software Project Management Plan (SPMP)
+Project Title: NoCrash Airlines - Flight Tickets for Passengers
+
+
+Section 011 team 19
+
+
+Pre-phase 1 - SPMP 
+Gantt Chart
+Task and roles for Gantt Chart
+Phase
+	Assigned to 
+	Requirement Analysis (phase I)
+	Arooran, Fardin
+	System Design (phase II)
+	Nidhi, Arooran
+	System Implementation (phase III)
+	Fardin, Nidhi
+	System Testing (phase IV)
+	Arooran, Fardin, Nidhi
+	
+
+  
+
+Phase 1 - Requirement Analysis 
+1. System Domain and Objectives
+The NoCrash Airlines Flight Tickets for passengers system is designed to allow users to browse, book, and manage flight tickets efficiently through a digital platform. It should use the process of reserving airline tickets, managing passenger information, and handling payments, while also providing airlines with a structured way to manage flight schedules, seat availability, and booking records.
+Objectives:
+* Provide a simple and user-friendly interface for passengers to browse and book flights.
+* Automate reservation and ticket generation processes.
+* Ensure secure handling of passenger details and payment transactions.
+* Maintain up-to-date flight schedules and seat availability.
+* Support cancellation, rescheduling, and refund policies.
+
+
+2. Major Actors and Components
+
+
+Actor/Component
+	Role/Description
+	Passenger (actor)
+	Searches flights, books tickets, makes payments, and cancels/reschedules bookings.
+	Airline Staff (component)
+	Manages flight schedules, monitors bookings, and updates flight information.
+	Payment Gateway (component)
+
+
+	Handles secure online transactions/payments for bookings and cancellations.
+	Admin (actor)
+
+
+	Maintains system, manages users, monitors transactions, and ensures data integrity.
+	System Database (component)
+	Stores flight schedules, user details, bookings, and payment records.
+	
+
+3. Glossary
+
+
+Term
+	Definition
+	Passenger
+	A user who books and travels using the flight services.
+	Booking ID
+	A unique identifier is generated for each reservation.
+	Payment Gateway
+	A third-party service that processes online transactions securely.
+	Check-in
+	The process where a passenger confirms their presence for a flight.
+	Refund Policy
+	The rules under which passengers can get their money back after cancellation.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4. Table of Functional Requirements (FR) 
+
+
+ID
+	Functional Requirement
+	Actor
+	Description
+	FR-1 
+	Passenger Registration 
+	Passenger
+	The system must allow new passengers to create an account by entering basic personal information such as name, email, phone number, and password. Successful registration will store user data securely in the database. 
+	FR-2 
+	Passenger Login/Authentication
+	Passenger
+	The system must verify passenger credentials (email and password) to grant access to their personal dashboard and prevent unauthorized entry. 
+	FR-3
+	Flight Search 
+	Passenger
+	The system must allow passengers to search for available flights by specifying origin, destination, travel dates, number of passengers, and class (e.g., Economy or Business). Search results must display flight timings, duration, and fare details.
+
+
+	FR-4
+	Ticket Booking
+	Passenger
+	The system must allow passengers to select a flight, choose seats, and provide personal details (name, ID/passport number, contact info) to complete the booking. It should validate all information before proceeding.
+	FR-5
+	Online Payment
+	Passenger
+	The system must securely process payments via credit/debit cards or digital wallets using an integrated payment gateway. It must confirm successful transactions and generate a booking reference number.
+	FR-6
+	Booking Management
+	Passenger
+	The system must allow passengers to view, modify, or cancel existing bookings from their dashboard. It should show booking status (Confirmed, Cancelled, or Rescheduled).
+	FR-7
+	Reschedule Booking
+	Passenger
+	The system must allow passengers to change travel dates or select a new flight for an existing booking. The system should update ticket and payment records accordingly.
+	FR-8
+	E-Ticket Generation
+	Passenger
+	Once payment is confirmed, the system must automatically generate an electronic ticket and send it via email or SMS to the passenger.
+	FR-9
+	Notification and Alerts
+	Passenger
+	The system must send notifications for booking confirmation, cancellation, rescheduling, or flight delays via email/SMS.
+	FR-10
+	User Profile Management
+	Passenger
+	The system must allow passengers to update personal details such as address, phone number, and password at any time through their account settings
+	FR-11
+	Admin Authentication
+	Admin
+	The system must allow administrators to log in with secure credentials to prevent unauthorized access to sensitive system data.
+	FR-12
+	Flight Management
+	Admin
+	The system must allow admins to add, edit, or delete flight details including flight number, route, timing, aircraft type, and total available seats.
+	FR-13
+	Seat Inventory Management 
+	Admin
+	The system must allow admins to monitor and adjust seat availability for each flight based on bookings and cancellations.
+	FR-14
+	Booking Oversight 
+	Admin
+	The system must enable admins to view all passenger bookings, cancellations, and reschedules in real time. It should also allow manual updates if necessary.
+	FR-15
+	Report Generation and Analytics
+	Admin
+	The system must allow admins to generate various reports (daily sales, passenger trends, most booked routes, etc.) to support operational and business decision-making.
+	FR-16
+	Check Passenger List
+	Airline Staff
+	The system must allow airline staff to view the passenger manifest for each flight, including passenger name, seat number, and ticket status.
+	FR-17
+	Verify Ticket & Boarding
+	Airline Staff
+	The system must allow staff to scan and validate boarding passes at check-in and boarding gates to confirm valid reservations.
+	FR-18
+	Manage Seat Allocation
+	Airline Staff
+	Staff must be able to assign, change, or block seats for passengers during check-in or special requests.
+	FR-19
+	Handle Baggage Check-In
+	Airline Staff
+	The system must allow staff to record checked baggage information, generate baggage tags, and link them to the passenger’s record.
+	FR-20
+	Handle Operational Alerts
+	Airline Staff
+	The system must allow staff to send and receive operational alerts (e.g., flight delay, gate change) and notify passengers if needed.
+	FR-21
+	Store Flight Data
+	Database
+	The database must store all flight information including schedules, destinations, aircraft details, and seat availability.
+	FR-22
+	Store Passenger Records
+	Database
+	The database must securely store passenger profile data, booking information, payment confirmations, and travel history.
+	FR-23
+	Maintain Transaction Logs
+	Database
+	The database must store logs of booking transactions, cancellations, payments, and modifications for audit and recovery.
+	FR-24
+	Data Backup & Recovery
+	Database
+	The system must automatically back up all flight and passenger records and support recovery in case of data loss.
+	FR-25
+	Support Real-Time Updates
+	Database
+	The database must update booking status, seat availability, and flight schedules in real-time to prevent double-booking.
+	FR-26
+	Secure Payment Processing
+	Payment Gateway
+	The payment gateway must securely process payments using encryption and industry-standard security protocols.
+	FR-27
+	Support Multiple Payment Methods
+	Payment Gateway
+	The system must support multiple payment methods such as credit/debit cards, online banking, and mobile wallets.
+	FR-28
+	Transaction Verification
+	Payment Gateway
+	The gateway must verify transaction authenticity and send success or failure status to the booking system.
+	FR-29
+	Refund Processing
+	Payment Gateway
+	The gateway must support secure and trackable refund transactions when passengers cancel bookings.
+	FR-30
+	Fraud Detection
+	Payment Gateway
+	The system must detect suspicious or fraudulent transactions and alert the airline system for further action.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5. Table of Non-Functional Requirements (NFR)
+
+
+ID
+	Requirement
+	Description 
+	NFR-1
+	System Availability
+	The system must be available 24/7 with a minimum monthly uptime of 99.7%, validated using server monitoring logs (e.g., AWS CloudWatch).
+	NFR-2
+	Scalability
+	The system must be able to handle a minimum of 500 concurrent users while maintaining service performance, validated through load tests.
+	NFR-3
+	Booking Response Speed
+	Ticket booking confirmation pages must load within ≤ 5 seconds for 95% of transactions under standard internet speeds (10–30 Mbps), verified by performance testing tools.
+	NFR-4
+	Data Backup & Recovery
+	System must perform automatic daily backups and support full recovery within 2 hours in case of data failure, tested during disaster recovery simulation.
+	NFR-5
+	Error Handling
+	The system should display user-friendly error messages for 100% of system errors and log each error event in the database with timestamp & error code.
+	NFR-6
+	Password Policy / Security
+	User passwords must follow a strong policy (min 8 characters, 1 number, 1 special character) and system must lock account after 5 failed login attempts, verified via security audit.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6. Table of Assumptions (A)
+
+
+ID
+	Assumption
+	Description
+	A-1
+	Internet Access
+	Users will have a stable internet connection while using the system.
+	A-2
+	Device Compatibility
+	Users will access the system via web browsers and mobile devices.
+	A-3
+	Payment Reliability
+	The external payment gateway will always be available and secure.
+	A-4
+	Valid Data
+	Users will provide accurate personal and travel details during booking.
+	A-5
+	Airline Cooperation
+	Airlines will regularly update flight schedules and seat availability.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Table of Responsibilities (R)
+
+
+ID
+	Actor/
+Component
+	Responsibility
+	Description
+	Traceability (Phase-II)
+	R-1
+	Passenger
+	Search for flights
+	Inputs origin, destination, and dates to find flights
+
+	
+
+	R-2
+	System Database
+	Display Flights
+	Validate flight search information, and return resulting flight information
+	
+
+	R-3
+	Passenger
+	Book Flights
+	Select Flights, put payment information, and receive tickets for flights
+	
+
+	R-4
+	System Database
+	Register Bought Tickets
+	Store data on passengers and their purchased flights
+	
+
+	R-5
+	Payment Portal
+	Validate User Payments
+	Validate that users have paid for tickets in full when purchasing.
+	
+
+	R-6
+	Passenger
+	Cancel Bookings
+	Cancel Purchased flights at the user’s request
+	
+
+	R-7
+	Airline Staff
+	Update Bookings to cancelled
+	Change status of booked flights to cancelled when a passenger cancels their flight
+	
+
+	R-8
+	Payment Portal
+	Issue Refunds
+	Issue partial or full refunds when passengers cancel flights
+	
+
+	R-9
+	Passengers
+	Reschedule Bookings
+	Inputs updated flight details to a new corresponding flight.
+	
+
+	R-10
+	System Database
+	Edit Booking Information
+	Update system records to match changes in a rescheduled flight.
+	
+
+	R-11
+	System Database
+	Retrieve Bookings
+	Validate Passenger information and return corresponding booking information.
+	
+
+	R-12
+	Passenger
+	View Bookings
+	Input valid passenger details to view current bookings
+	
+
+	R-13
+	Passenger
+	Register New Account
+	Input valid passenger details and passwords
+	
+
+	R-14
+	System Database
+	Validate User Passwords/details
+	Validate User passwords and other login information
+	
+
+	R-15
+	Passenger
+	Login to account
+	Input login information such as password, email, and other critical information
+	
+
+	R-16
+	Admin
+	Add Flights
+	Input Flight times, destination, and gate number to create flights
+	
+
+	R-17
+	System Database
+	Validate Flight Data
+	Validate flight times, destinations, and gate numbers before adding flights to records/
+	
+
+	R-18
+	Admin
+	Generate Reports
+	Queue sales, flights, and analytical reports to generate and print out.
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8. Table of Use Cases (UC)
+
+
+Use Case ID
+	Goal (Main Use Case)
+	Sub-Goals
+	Traceability (Phase-II)
+	UC-1
+	Search Flights
+	Enter origin, destination, date, filters
+	
+
+	UC-2
+	Book Ticket
+	Select flight, enter passenger info, confirm booking
+	
+
+	UC-3
+	Make Payment
+	Choose payment method, confirm payment
+	
+
+	UC-4
+	Cancel Booking
+	Select booking, request cancellation
+	
+
+	UC-5
+	Reschedule Flight
+	Select booking, choose new flight
+	
+
+	UC-6
+	View Booking
+	Retrieve booking details using Booking ID
+	
+
+	UC-7
+	Passenger Registration
+	Create user account and let users add information to the profile
+	
+
+	UC-8
+	Passenger Login
+	Verify credentials to access the account.
+	
+
+	UC-9
+	Admin Manage Flights
+	Add, edit, or delete flights
+	
+
+	UC-10
+	Generate Reports
+	Admin views sales or passenger summaries
+	
+
+	
+
+
+
+
+
+
+
+9. Use Case Diagrams (UCD)
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10. Use Case Scenarios (STD)
+
+
+Scenario ID
+	Scenario (Sub-Goal)
+	Description
+	Traceability (Phase-II)
+	S-1
+	Enter Search Criteria
+	Passenger enters origin, destination, date
+	
+
+	S-2
+	Display Available Flights
+	System lists flights matching criteria
+	
+
+	S-3
+	Select Flight
+	Passenger chooses a specific flight
+	
+
+	S-4
+	Enter Passenger Info
+	Passenger provides name, contact, passport number
+	
+
+	S-5
+	Confirm Booking
+	Passenger reviews booking before payment
+	
+
+	S-6
+	Process Payment
+	Payment Gateway processes transaction
+	
+
+	S-7
+	Generate Ticket
+	System generates Booking ID and e-ticket
+	
+
+	S-8
+	Request Cancellation
+	Passenger requests booking cancellation
+	
+
+	S-9
+	Reschedule Flight
+	Passenger selects alternative date/flight
+	
+
+	S-10
+	Issue Refund
+	System processes refund after cancellation
+	
+
+	
+
+
+
+UC-1: Search Flights
+Trigger: When user clicks on Search Flight
+Actor: Passenger, System
+Precondition:  the passenger has access to the system interface.
+Main Flow:
+1. Passenger enters the origin, destination, and date.
+2. System validates input.
+3. System searches the database for available flights.
+4. System displays a list of matching flights.
+Postcondition: Passenger views available flight options.
+Alternate Flow:
+– If no flights are found, the system shows “No flights available.”
+Non-functional requirements to consider: NFR-4
+
+
+UC-2: Book Ticket
+Trigger: When user wants to book a flight ticket and clicks on Book Ticket
+Actors: Passenger, System, Database
+Precondition: Passenger has selected a flight.
+Main Flow:
+   1. Passenger selects the desired flight.
+   2. Passenger enters personal and contact details.
+   3. System validates passenger information.
+   4. System creates a temporary booking record.
+   5. System displays payment options.
+Postcondition: the Booking record is created and ready for payment.
+Alternate Flow:
+– If passenger data is incomplete, the system requests correction.
+Non-functional requirements to consider: NFR-4, NFR-6
+
+
+UC-3: Make Payment
+Trigger: When user is ready to confirm the booking of the ticket and clicks on Checkout
+Actors: Passenger, System, Payment Gateway, Database
+Precondition: The passenger has an unpaid booking.
+Main Flow:
+      1. Passenger selects the preferred payment method.
+      2. System sends a payment request to the payment gateway.
+      3. Payment gateway processes the transaction.
+      4. System receives payment confirmation.
+      5. System updates the booking as “Confirmed” and generates a ticket.
+      6. System sends a confirmation email/SMS to the passenger.
+Postcondition: The Ticket is confirmed and issued.
+Alternate Flow:
+– If payment fails, the system displays an error and allows a retry.
+Non-functional requirements to consider: NFR-4, NFR-6, NFR-2
+UC-4: Cancel Booking
+Trigger: When user wants to cancel and clicks the Cancel button
+Actors: Passenger, System, Database
+Precondition: Passenger has a confirmed booking.
+Main Flow:
+         1. Passenger logs in and opens booking history.
+         2. Passenger selects the booking to cancel.
+         3. System verifies booking eligibility for cancellation.
+         4. System updates the booking status to “Cancelled.”
+         5. System sends cancellation confirmation to the passenger.
+Postcondition: Booking is marked as cancelled.
+Alternate Flow:
+– If booking is non-refundable, the system shows an error message.
+Non-functional requirements to consider: NFR-6
+
+
+UC-5: Reschedule Flight
+Trigger: When user wants to reschedule the flight (Change date or flight time) and clicks on modify flight
+Actors: Passenger, System, Database
+Precondition: Passenger has a valid booking.
+Main Flow:
+            1. Passenger selects the booking to reschedule.
+            2. Passenger enters a new date or destination.
+            3. System checks for available flights.
+            4. Passenger selects a new flight.
+            5. System updates booking details and confirms changes.
+Postcondition: Booking is successfully rescheduled.
+Alternate Flow:
+– If no flights are available, the system displays “no flight found”.
+Non-functional requirements to consider: NFR-2, NFR-3, NFR-5
+
+
+UC-6: View Booking
+Trigger: When user wants to check booking information and clicks on view booking
+Actors: Passenger, System, Database
+Precondition: Passenger must be logged in.
+Main Flow:
+               1. Passenger enters Booking ID or views the booking list.
+               2. System retrieves booking details from the database.
+               3. System displays booking status and ticket details.
+Postcondition: The passenger can view current booking information.
+Non-functional requirements to consider : NFR-4, NFR-6
+UC-7: Passenger Registration
+Trigger: When user wants to add his information to the registration
+Actors: Passenger, System, Database
+Precondition: The passenger is not yet registered.
+Main Flow:
+                  1. Passenger selects “Sign Up.”
+                  2. Passenger enters name, email, and password.
+                  3. System validates details and checks for duplicates.
+                  4. System saves passenger data in the database.
+                  5. System displays a registration success message.
+Postcondition: Passenger account is created.
+Alternate Flow:
+– If the email already exists, the system displays an error.
+Non-functional requirements to consider: NFR-4, NFR-6
+
+
+UC-8: Passenger Login
+Trigger: Passenger uses information to log into account
+Actors: Passenger, System, Database
+Precondition: Passenger must have a registered account.
+Main Flow:
+                     1. Passenger enters their email and password.
+                     2. System verifies credentials against database records.
+                     3. System grants access if credentials are valid.
+                     4. Passenger is redirected to the dashboard. 
+Postcondition: The passenger is successfully logged in.
+Alternate Flow:
+– If credentials are invalid, the system prompts for a retry.
+Non-functional requirements to consider : NFR-4, NFR-6
+
+
+
+
+UC-9: Admin Manage Flights
+Trigger: Admin opens the “Manage Flights” Dashboard
+Actors: Admin, System, Database
+Precondition: Admin must be logged in.
+Main Flow:
+                        1. Admin selects “Manage Flights.”
+                        2. Admin chooses to add, edit, or delete a flight.
+                        3. System updates flight information in the database.
+                        4. System displays a confirmation message.
+Postcondition: The flight database is updated.
+Alternate Flow:
+– If the flight ID doesn’t exist, the system displays an error.
+Non-functional requirements to consider: NFR-4, NFR-6
+
+
+
+
+UC-10: Generate Reports
+Trigger: Admin signals request to generate reports
+Actors: Admin, System, Database
+Precondition: Admin is authenticated.
+Main Flow:
+                           1. Admin selects type of report (sales, bookings, etc.).
+                           2. System retrieves relevant data from the database.
+                           3. System compiles and formats the report.
+                           4. System displays or downloads the report. 
+Postcondition: Admin receives the requested report.
+Non-functional requirements to consider : NFR-4, NFR-6
+11. Activity Diagrams (AD)
+
+
+UC-1: Search Flights
+
+
+  
+
+
+
+
+
+
+
+
+
+UC-2: Book Ticket
+
+
+
+
+
+
+  
+
+UC-3: Make Payment
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UC-4: Cancel Booking
+
+
+
+
+  
+
+
+
+UC-5: Reschedule Flight
+  
+
+
+
+
+
+
+
+
+
+UC-6: View Booking
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UC-7: Passenger Registration
+
+
+  
+
+UC-8: Passenger Login
+
+
+  
+
+
+
+UC-9: Admin Manage Flights
+
+
+
+
+  
+
+
+
+
+
+
+
+UC-10: Generate Reports
