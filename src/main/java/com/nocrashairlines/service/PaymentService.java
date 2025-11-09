@@ -157,9 +157,16 @@ public class PaymentService {
     public boolean verifyTransaction(String transactionReference) {
         return paymentGateway.verifyTransaction(transactionReference);
     }
-    
+
+    /**
+     * Get all payments (Admin only)
+     */
+    public java.util.List<Payment> getAllPayments() {
+        return database.getAllPayments();
+    }
+
     // Helper methods
-    
+
     private String generatePaymentId() {
         return "PAY-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
