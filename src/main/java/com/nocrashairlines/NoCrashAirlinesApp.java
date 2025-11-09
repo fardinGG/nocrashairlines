@@ -94,32 +94,54 @@ public class NoCrashAirlinesApp {
     private void passengerMenu() {
         while (true) {
             System.out.println("\n=== Passenger Portal ===");
-            System.out.println("1. Register");
-            System.out.println("2. Login");
-            System.out.println("3. Search Flights");
-            System.out.println("4. Book Ticket");
-            System.out.println("5. View My Bookings");
-            System.out.println("6. Cancel Booking");
-            System.out.println("7. Reschedule Booking");
-            System.out.println("8. Logout");
-            System.out.print("Enter your choice: ");
-            
-            int choice = getIntInput();
-            
-            switch (choice) {
-                case 1 -> registerPassenger();
-                case 2 -> loginPassenger();
-                case 3 -> searchFlights();
-                case 4 -> bookTicket();
-                case 5 -> viewMyBookings();
-                case 6 -> cancelBooking();
-                case 7 -> rescheduleBooking();
-                case 8 -> {
-                    currentPassenger = null;
-                    System.out.println("Logged out successfully!");
-                    return;
+
+            if (currentPassenger == null) {
+                // Not logged in - show login/register options
+                System.out.println("1. Register");
+                System.out.println("2. Login");
+                System.out.println("3. Search Flights");
+                System.out.println("4. Back to Main Menu");
+                System.out.print("Enter your choice: ");
+
+                int choice = getIntInput();
+
+                switch (choice) {
+                    case 1 -> registerPassenger();
+                    case 2 -> loginPassenger();
+                    case 3 -> searchFlights();
+                    case 4 -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+            } else {
+                // Logged in - show passenger options
+                System.out.println("Logged in as: " + currentPassenger.getName());
+                System.out.println("1. Search Flights");
+                System.out.println("2. Book Ticket");
+                System.out.println("3. View My Bookings");
+                System.out.println("4. Cancel Booking");
+                System.out.println("5. Reschedule Booking");
+                System.out.println("6. Update Profile");
+                System.out.println("7. Logout");
+                System.out.print("Enter your choice: ");
+
+                int choice = getIntInput();
+
+                switch (choice) {
+                    case 1 -> searchFlights();
+                    case 2 -> bookTicket();
+                    case 3 -> viewMyBookings();
+                    case 4 -> cancelBooking();
+                    case 5 -> rescheduleBooking();
+                    case 6 -> updateProfile();
+                    case 7 -> {
+                        currentPassenger = null;
+                        System.out.println("Logged out successfully!");
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
             }
         }
     }
@@ -220,7 +242,15 @@ public class NoCrashAirlinesApp {
         System.out.print("Destination: ");
         String destination = scanner.nextLine();
 
-        LocalDateTime searchDate = LocalDateTime.now().plusDays(1);
+        // Ask for travel date
+        System.out.print("How many days from today? (0=today, 1=tomorrow, etc.): ");
+        int daysFromNow = getIntInput();
+        if (daysFromNow < 0) {
+            System.out.println("Invalid number of days. Using tomorrow.");
+            daysFromNow = 1;
+        }
+
+        LocalDateTime searchDate = LocalDateTime.now().plusDays(daysFromNow);
         List<Flight> flights = flightService.searchFlights(origin, destination, searchDate);
 
         if (flights.isEmpty()) {
@@ -258,12 +288,21 @@ public class NoCrashAirlinesApp {
             System.out.println("\n=== Book Ticket ===");
 
             // First, let user search for flights
+            System.out.println("Available cities: Toronto, Vancouver, Montreal, Calgary");
             System.out.print("Origin City: ");
             String origin = scanner.nextLine();
             System.out.print("Destination City: ");
             String destination = scanner.nextLine();
 
-            LocalDateTime searchDate = LocalDateTime.now().plusDays(1);
+            // Ask for travel date
+            System.out.print("How many days from today? (0=today, 1=tomorrow, etc.): ");
+            int daysFromNow = getIntInput();
+            if (daysFromNow < 0) {
+                System.out.println("Invalid number of days. Using tomorrow.");
+                daysFromNow = 1;
+            }
+
+            LocalDateTime searchDate = LocalDateTime.now().plusDays(daysFromNow);
             List<Flight> flights = flightService.searchFlights(origin, destination, searchDate);
 
             if (flights.isEmpty()) {
@@ -423,17 +462,188 @@ public class NoCrashAirlinesApp {
             System.out.println("Please login first!");
             return;
         }
-        
+
         try {
-            System.out.print("\nEnter Booking ID to reschedule: ");
-            String bookingId = scanner.nextLine();
-            System.out.print("Enter New Flight ID: ");
-            String newFlightId = scanner.nextLine();
-            
-            bookingService.rescheduleBooking(bookingId, newFlightId);
-            System.out.println("Booking rescheduled successfully!");
+            // Show user's bookings first
+            List<Booking> bookings = bookingService.getBookingsByPassengerId(currentPassenger.getUserId());
+
+            if (bookings.isEmpty()) {
+                System.out.println("\nYou have no bookings to reschedule.");
+                return;
+            }
+
+            // Filter only confirmed bookings
+            List<Booking> confirmedBookings = bookings.stream()
+                .filter(b -> "CONFIRMED".equals(b.getStatus()))
+                .collect(java.util.stream.Collectors.toList());
+
+            if (confirmedBookings.isEmpty()) {
+                System.out.println("\nYou have no confirmed bookings to reschedule.");
+                return;
+            }
+
+            System.out.println("\n=== Reschedule Booking ===");
+            System.out.println("Your Confirmed Bookings:\n");
+
+            for (int i = 0; i < confirmedBookings.size(); i++) {
+                Booking b = confirmedBookings.get(i);
+                Flight f = flightService.getFlightById(b.getFlightId());
+                System.out.println((i + 1) + ". Booking ID: " + b.getBookingId());
+                if (f != null) {
+                    System.out.println("   Flight: " + f.getFlightNumber() + " (" + f.getOrigin() + " → " + f.getDestination() + ")");
+                    System.out.println("   Departure: " + f.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                }
+                System.out.println("   Seat: " + b.getSeatNumber() + " (" + b.getTravelClass() + ")");
+                System.out.println();
+            }
+
+            System.out.print("Select booking to reschedule (1-" + confirmedBookings.size() + ") or 0 to cancel: ");
+            int bookingChoice = getIntInput();
+
+            if (bookingChoice == 0) {
+                System.out.println("Reschedule cancelled.");
+                return;
+            }
+
+            if (bookingChoice < 1 || bookingChoice > confirmedBookings.size()) {
+                System.out.println("Invalid selection.");
+                return;
+            }
+
+            Booking selectedBooking = confirmedBookings.get(bookingChoice - 1);
+            Flight currentFlight = flightService.getFlightById(selectedBooking.getFlightId());
+
+            // Reschedule keeps same route, only changes date/time
+            System.out.println("\n=== Select New Date ===");
+            System.out.println("Current flight: " + currentFlight.getFlightNumber());
+            System.out.println("Route: " + currentFlight.getOrigin() + " → " + currentFlight.getDestination());
+            System.out.println("Current departure: " + currentFlight.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+
+            System.out.print("\nHow many days from today for new flight? (0=today, 1=tomorrow, etc.): ");
+            int daysFromNow = getIntInput();
+            if (daysFromNow < 0) {
+                System.out.println("Invalid number of days.");
+                return;
+            }
+
+            LocalDateTime searchDate = LocalDateTime.now().plusDays(daysFromNow);
+
+            // Search for flights on same route
+            List<Flight> flights = flightService.searchFlights(
+                currentFlight.getOrigin(),
+                currentFlight.getDestination(),
+                searchDate
+            );
+
+            if (flights.isEmpty()) {
+                System.out.println("\n❌ No flights found for " + currentFlight.getOrigin() + " → " +
+                    currentFlight.getDestination() + " on " + searchDate.toLocalDate());
+                System.out.println("Try a different date.");
+                return;
+            }
+
+            // Display available flights
+            System.out.println("\n=== Available Flights ===");
+            for (int i = 0; i < flights.size(); i++) {
+                Flight f = flights.get(i);
+                System.out.println("\n" + (i + 1) + ". Flight " + f.getFlightNumber());
+                System.out.println("   Route: " + f.getOrigin() + " → " + f.getDestination());
+                System.out.println("   Departure: " + f.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Arrival: " + f.getArrivalTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println("   Available Seats: " + f.getAvailableSeats() + "/" + f.getTotalSeats());
+            }
+
+            System.out.print("\nSelect new flight (1-" + flights.size() + ") or 0 to cancel: ");
+            int flightChoice = getIntInput();
+
+            if (flightChoice == 0) {
+                System.out.println("Reschedule cancelled.");
+                return;
+            }
+
+            if (flightChoice < 1 || flightChoice > flights.size()) {
+                System.out.println("Invalid selection.");
+                return;
+            }
+
+            Flight newFlight = flights.get(flightChoice - 1);
+
+            // Confirm reschedule
+            System.out.println("\n=== Confirm Reschedule ===");
+            System.out.println("Old Flight: " + currentFlight.getFlightNumber() + " on " +
+                currentFlight.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            System.out.println("New Flight: " + newFlight.getFlightNumber() + " on " +
+                newFlight.getDepartureTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            System.out.print("\nConfirm reschedule? (yes/no): ");
+            String confirm = scanner.nextLine();
+
+            if (!confirm.equalsIgnoreCase("yes")) {
+                System.out.println("Reschedule cancelled.");
+                return;
+            }
+
+            bookingService.rescheduleBooking(selectedBooking.getBookingId(), newFlight.getFlightId());
+            System.out.println("\n✅ Booking rescheduled successfully!");
+            System.out.println("New flight: " + newFlight.getFlightNumber());
+            System.out.println("Confirmation email has been sent!");
+
         } catch (BookingException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
+        }
+    }
+
+    // Update passenger profile
+    private void updateProfile() {
+        if (currentPassenger == null) {
+            System.out.println("Please login first!");
+            return;
+        }
+
+        System.out.println("\n=== Update Profile ===");
+        System.out.println("Current Information:");
+        System.out.println("Name: " + currentPassenger.getName());
+        System.out.println("Email: " + currentPassenger.getEmail());
+        System.out.println("Phone: " + currentPassenger.getPhoneNumber());
+        System.out.println("Passport: " + currentPassenger.getPassportNumber());
+
+        System.out.println("\nWhat would you like to update?");
+        System.out.println("1. Phone Number");
+        System.out.println("2. Address");
+        System.out.println("3. Password");
+        System.out.println("4. Cancel");
+        System.out.print("Enter your choice: ");
+
+        int choice = getIntInput();
+
+        try {
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("New Phone Number: ");
+                    String phone = scanner.nextLine();
+                    currentPassenger.setPhoneNumber(phone);
+                    authService.updatePassengerProfile(currentPassenger);
+                    System.out.println("✅ Phone number updated successfully!");
+                }
+                case 2 -> {
+                    System.out.print("New Address: ");
+                    String address = scanner.nextLine();
+                    currentPassenger.setAddress(address);
+                    authService.updatePassengerProfile(currentPassenger);
+                    System.out.println("✅ Address updated successfully!");
+                }
+                case 3 -> {
+                    System.out.print("Current Password: ");
+                    String oldPassword = scanner.nextLine();
+                    System.out.print("New Password: ");
+                    String newPassword = scanner.nextLine();
+                    authService.changePassword(currentPassenger, oldPassword, newPassword);
+                    System.out.println("✅ Password changed successfully!");
+                }
+                case 4 -> System.out.println("Update cancelled.");
+                default -> System.out.println("Invalid choice.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
     
