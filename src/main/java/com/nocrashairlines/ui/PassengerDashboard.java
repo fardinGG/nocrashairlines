@@ -257,6 +257,8 @@ public class PassengerDashboard {
     }
     
     public BorderPane getView() {
+        // Refresh the dashboard when showing
+        refresh();
         return view;
     }
 }

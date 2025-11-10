@@ -146,6 +146,8 @@ public class WelcomeScreen {
     }
     
     public BorderPane getView() {
+        // Always recreate the view to ensure fresh state
+        createView();
         return view;
     }
 }

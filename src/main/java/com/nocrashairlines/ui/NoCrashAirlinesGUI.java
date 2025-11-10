@@ -61,16 +61,20 @@ public class NoCrashAirlinesGUI extends Application {
     }
     
     public void showWelcomeScreen() {
+        System.out.println("=== showWelcomeScreen() called ===");
         Scene scene = new Scene(welcomeScreen.getView(), 1200, 800);
         loadStylesheet(scene);
         primaryStage.setScene(scene);
+        System.out.println("Welcome screen set successfully");
     }
 
     public void showLoginScreen(boolean isAdmin) {
+        System.out.println("=== showLoginScreen() called, isAdmin=" + isAdmin + " ===");
         loginScreen.setAdminMode(isAdmin);
         Scene scene = new Scene(loginScreen.getView(), 1200, 800);
         loadStylesheet(scene);
         primaryStage.setScene(scene);
+        System.out.println("Login screen set successfully");
     }
 
     public void showRegisterScreen() {

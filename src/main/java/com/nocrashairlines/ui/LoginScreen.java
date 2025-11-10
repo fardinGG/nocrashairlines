@@ -25,6 +25,7 @@ public class LoginScreen {
     }
     
     private void createView() {
+        System.out.println("LoginScreen.createView() called. isAdminMode=" + isAdminMode);
         view = new BorderPane();
         view.setStyle("-fx-background-color: linear-gradient(to bottom right, #667eea 0%, #764ba2 100%);");
 
@@ -147,8 +148,15 @@ public class LoginScreen {
         // Set the action - this is the important part
         final NoCrashAirlinesGUI appRef = this.app;
         backBtn.setOnAction(e -> {
-            System.out.println("Back button clicked!");
-            appRef.showWelcomeScreen();
+            System.out.println("=== Back button clicked! ===");
+            System.out.println("App reference: " + (appRef != null ? "OK" : "NULL"));
+            try {
+                appRef.showWelcomeScreen();
+                System.out.println("showWelcomeScreen() called successfully");
+            } catch (Exception ex) {
+                System.err.println("Error calling showWelcomeScreen: " + ex.getMessage());
+                ex.printStackTrace();
+            }
         });
         
         // Register link (only for passenger mode)

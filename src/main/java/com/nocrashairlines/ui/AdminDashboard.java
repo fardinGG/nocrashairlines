@@ -194,6 +194,8 @@ public class AdminDashboard {
     }
     
     public BorderPane getView() {
+        // Refresh the dashboard when showing
+        refresh();
         return view;
     }
 }
