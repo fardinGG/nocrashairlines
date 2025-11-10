@@ -257,8 +257,8 @@ public class PassengerDashboard {
     }
     
     public BorderPane getView() {
-        // Refresh the dashboard when showing
-        refresh();
+        // Recreate the view to avoid scene conflicts
+        createView();
         return view;
     }
 }

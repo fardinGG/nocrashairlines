@@ -199,12 +199,12 @@ public class LoginScreen {
         try {
             if (isAdminMode) {
                 Admin admin = app.getAuthService().loginAdmin(email, password);
-                showSuccess("Login successful! Welcome, " + admin.getName());
+                System.out.println("Admin login successful: " + admin.getName());
                 app.showAdminDashboard();
             } else {
                 Passenger passenger = app.getAuthService().loginPassenger(email, password);
                 app.setCurrentPassenger(passenger);
-                showSuccess("Login successful! Welcome, " + passenger.getName());
+                System.out.println("Passenger login successful: " + passenger.getName());
                 app.showPassengerDashboard();
             }
         } catch (AuthenticationException e) {
@@ -214,15 +214,10 @@ public class LoginScreen {
     
     private void showError(String message) {
         errorLabel.setText("❌ " + message);
+        errorLabel.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;");
         errorLabel.setVisible(true);
     }
-    
-    private void showSuccess(String message) {
-        errorLabel.setText("✅ " + message);
-        errorLabel.setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold;");
-        errorLabel.setVisible(true);
-    }
-    
+
     public void setAdminMode(boolean isAdmin) {
         this.isAdminMode = isAdmin;
     }

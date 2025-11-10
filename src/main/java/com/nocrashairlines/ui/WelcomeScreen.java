@@ -41,27 +41,27 @@ public class WelcomeScreen {
         Label welcomeMsg = new Label("Book flights, manage bookings, and travel with confidence");
         welcomeMsg.setFont(Font.font("System", 16));
         welcomeMsg.setStyle("-fx-text-fill: white;");
-        
+
         // Buttons container
         VBox buttonBox = new VBox(20);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setMaxWidth(400);
-        
+
         // Passenger Login Button
         Button passengerBtn = new Button("Passenger Login");
         passengerBtn.setPrefWidth(350);
         passengerBtn.setPrefHeight(60);
         passengerBtn.setFont(Font.font("System", FontWeight.BOLD, 16));
         passengerBtn.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; " +
-                             "-fx-background-radius: 10; -fx-cursor: hand; " +
+                             "-fx-background-radius: 10; " +
                              "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);");
         passengerBtn.setOnMouseEntered(e -> passengerBtn.setStyle(
             "-fx-background-color: #2563eb; -fx-text-fill: white; " +
-            "-fx-background-radius: 10; -fx-cursor: hand; " +
+            "-fx-background-radius: 10; " +
             "-fx-effect: dropshadow(gaussian, rgba(59,130,246,0.5), 12, 0, 0, 4);"));
         passengerBtn.setOnMouseExited(e -> passengerBtn.setStyle(
             "-fx-background-color: #3b82f6; -fx-text-fill: white; " +
-            "-fx-background-radius: 10; -fx-cursor: hand; " +
+            "-fx-background-radius: 10; " +
             "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);"));
         passengerBtn.setOnAction(e -> app.showLoginScreen(false));
 
@@ -71,15 +71,15 @@ public class WelcomeScreen {
         registerBtn.setPrefHeight(60);
         registerBtn.setFont(Font.font("System", FontWeight.BOLD, 16));
         registerBtn.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; " +
-                            "-fx-background-radius: 10; -fx-cursor: hand; " +
+                            "-fx-background-radius: 10; " +
                             "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);");
         registerBtn.setOnMouseEntered(e -> registerBtn.setStyle(
             "-fx-background-color: #059669; -fx-text-fill: white; " +
-            "-fx-background-radius: 10; -fx-cursor: hand; " +
+            "-fx-background-radius: 10; " +
             "-fx-effect: dropshadow(gaussian, rgba(16,185,129,0.5), 12, 0, 0, 4);"));
         registerBtn.setOnMouseExited(e -> registerBtn.setStyle(
             "-fx-background-color: #10b981; -fx-text-fill: white; " +
-            "-fx-background-radius: 10; -fx-cursor: hand; " +
+            "-fx-background-radius: 10; " +
             "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);"));
         registerBtn.setOnAction(e -> app.showRegisterScreen());
 
@@ -90,17 +90,17 @@ public class WelcomeScreen {
         adminBtn.setFont(Font.font("System", FontWeight.BOLD, 14));
         adminBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; " +
                          "-fx-border-color: white; -fx-border-width: 2; " +
-                         "-fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;");
+                         "-fx-background-radius: 10; -fx-border-radius: 10;");
         adminBtn.setOnMouseEntered(e -> adminBtn.setStyle(
             "-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; " +
             "-fx-border-color: white; -fx-border-width: 2; " +
-            "-fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;"));
+            "-fx-background-radius: 10; -fx-border-radius: 10;"));
         adminBtn.setOnMouseExited(e -> adminBtn.setStyle(
             "-fx-background-color: transparent; -fx-text-fill: white; " +
             "-fx-border-color: white; -fx-border-width: 2; " +
-            "-fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;"));
+            "-fx-background-radius: 10; -fx-border-radius: 10;"));
         adminBtn.setOnAction(e -> app.showLoginScreen(true));
-        
+
         buttonBox.getChildren().addAll(passengerBtn, registerBtn, adminBtn);
         
         // Features section
