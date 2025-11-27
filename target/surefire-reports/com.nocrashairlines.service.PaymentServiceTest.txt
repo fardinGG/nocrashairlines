@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.nocrashairlines.service.PaymentServiceTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.444 s <<< FAILURE! -- in com.nocrashairlines.service.PaymentServiceTest
-com.nocrashairlines.service.PaymentServiceTest.testProcessRefund -- Time elapsed: 0.111 s <<< ERROR!
-[PAYMENT_FAILED] PaymentException: Payment processing failed (timestamp: 1764264593023)
-	at com.nocrashairlines.service.PaymentService.processPayment(PaymentService.java:94)
-	at com.nocrashairlines.service.PaymentServiceTest.testProcessRefund(PaymentServiceTest.java:158)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.428 s -- in com.nocrashairlines.service.PaymentServiceTest

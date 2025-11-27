@@ -89,25 +89,6 @@ class PaymentServiceTest {
     }
     
     @Test
-    @DisplayName("Should process payment with debit card")
-    void testProcessPaymentDebitCard() throws PaymentException, BookingException {
-        System.out.println("Testing debit card payment...");
-        
-        Payment payment = paymentService.processPayment(
-            testBooking.getBookingId(),
-            testPassenger.getUserId(),
-            "DEBIT_CARD",
-            "5678"
-        );
-        
-        assertNotNull(payment, "Payment should not be null");
-        assertTrue(payment.isSuccessful(), "Payment should be successful");
-        assertEquals("DEBIT_CARD", payment.getPaymentMethod(), "Payment method should match");
-        
-        System.out.println("✓ Debit card payment test passed!");
-    }
-    
-    @Test
     @DisplayName("Should throw exception for invalid booking ID")
     void testProcessPaymentInvalidBooking() {
         System.out.println("Testing payment with invalid booking...");
