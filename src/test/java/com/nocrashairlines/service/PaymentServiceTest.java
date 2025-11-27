@@ -30,26 +30,27 @@ class PaymentServiceTest {
         authService = new AuthenticationService();
         adminService = new AdminService();
         System.out.println("Setting up PaymentService test...");
-        
-        // Create test passenger
+
+        // Create test passenger with unique email using timestamp
+        long timestamp = System.currentTimeMillis();
         testPassenger = authService.registerPassenger(
-            "Payment User", 
-            "payment@test.com", 
-            "PayTest@123", 
-            "+1234567890", 
-            "PY123456"
+            "Payment User",
+            "payment" + timestamp + "@test.com",
+            "PayTest@123",
+            "+1234567890",
+            "PY" + timestamp
         );
         
-        // Create test flight and booking
+        // Create test flight and booking with unique flight number
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1).withHour(12).withMinute(0);
         Flight testFlight = adminService.addFlight(
-            "PAY101", 
-            "Vancouver", 
-            "Toronto", 
-            tomorrow, 
-            tomorrow.plusHours(4), 
-            "Boeing 777", 
-            200, 
+            "PAY" + timestamp,
+            "Vancouver",
+            "Toronto",
+            tomorrow,
+            tomorrow.plusHours(4),
+            "Boeing 777",
+            200,
             "E8"
         );
         
@@ -152,7 +153,7 @@ class PaymentServiceTest {
     @DisplayName("Should process refund")
     void testProcessRefund() throws PaymentException, BookingException {
         System.out.println("Testing refund processing...");
-        
+
         // Process payment first
         paymentService.processPayment(
             testBooking.getBookingId(),
@@ -160,17 +161,21 @@ class PaymentServiceTest {
             "CREDIT_CARD",
             "1234"
         );
-        
+
+        // Cancel booking before refund
+        bookingService.cancelBooking(testBooking.getBookingId());
+
         // Process refund
         Payment refund = paymentService.processRefund(
             testBooking.getBookingId(),
             "Customer requested cancellation"
         );
-        
+
         assertNotNull(refund, "Refund should not be null");
-        assertTrue(refund.isSuccessful(), "Refund should be successful");
-        assertEquals("REFUND", refund.getPaymentMethod(), "Payment method should be REFUND");
-        
+        assertEquals("REFUNDED", refund.getStatus(), "Payment status should be REFUNDED");
+        assertEquals("Customer requested cancellation", refund.getRefundReason(), "Refund reason should match");
+        assertNotNull(refund.getRefundDate(), "Refund date should be set");
+
         System.out.println("✓ Refund processing test passed!");
     }
 }

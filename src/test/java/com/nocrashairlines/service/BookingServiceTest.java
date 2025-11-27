@@ -26,26 +26,27 @@ class BookingServiceTest {
         authService = new AuthenticationService();
         adminService = new AdminService();
         System.out.println("Setting up BookingService test...");
-        
-        // Create test passenger
+
+        // Create test passenger with unique email using timestamp
+        long timestamp = System.currentTimeMillis();
         testPassenger = authService.registerPassenger(
-            "Booking User", 
-            "booking@test.com", 
-            "BookPass@123", 
-            "+1234567890", 
-            "BK123456"
+            "Booking User",
+            "booking" + timestamp + "@test.com",
+            "BookPass@123",
+            "+1234567890",
+            "BK" + timestamp
         );
-        
-        // Create test flight
+
+        // Create test flight with unique flight number
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1).withHour(14).withMinute(0);
         testFlight = adminService.addFlight(
-            "BOOK101", 
-            "Toronto", 
-            "Montreal", 
-            tomorrow, 
-            tomorrow.plusHours(2), 
-            "Boeing 737", 
-            180, 
+            "BOOK" + timestamp,
+            "Toronto",
+            "Montreal",
+            tomorrow,
+            tomorrow.plusHours(2),
+            "Boeing 737",
+            180,
             "C3"
         );
         

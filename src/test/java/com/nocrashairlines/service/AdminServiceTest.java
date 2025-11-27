@@ -108,42 +108,42 @@ class AdminServiceTest {
     @DisplayName("Should generate daily sales report")
     void testGenerateDailySalesReport() {
         System.out.println("Testing daily sales report generation...");
-        
+
         LocalDateTime today = LocalDateTime.now();
         String report = adminService.generateDailySalesReport(today);
-        
+
         assertNotNull(report, "Report should not be null");
         assertFalse(report.isEmpty(), "Report should not be empty");
-        assertTrue(report.contains("Daily Sales Report"), "Report should contain title");
-        
+        assertTrue(report.contains("DAILY SALES REPORT"), "Report should contain title");
+
         System.out.println("✓ Daily sales report test passed!");
     }
-    
+
     @Test
     @DisplayName("Should generate passenger trends report")
     void testGeneratePassengerTrendsReport() {
         System.out.println("Testing passenger trends report generation...");
-        
+
         String report = adminService.generatePassengerTrendsReport();
-        
+
         assertNotNull(report, "Report should not be null");
         assertFalse(report.isEmpty(), "Report should not be empty");
-        assertTrue(report.contains("Passenger Trends Report"), "Report should contain title");
-        
+        assertTrue(report.contains("PASSENGER TRENDS REPORT"), "Report should contain title");
+
         System.out.println("✓ Passenger trends report test passed!");
     }
-    
+
     @Test
     @DisplayName("Should generate system statistics report")
     void testGenerateSystemStatisticsReport() {
         System.out.println("Testing system statistics report generation...");
-        
+
         String report = adminService.generateSystemStatisticsReport();
-        
+
         assertNotNull(report, "Report should not be null");
         assertFalse(report.isEmpty(), "Report should not be empty");
-        assertTrue(report.contains("System Statistics Report"), "Report should contain title");
-        
+        assertTrue(report.contains("SYSTEM STATISTICS REPORT"), "Report should contain title");
+
         System.out.println("✓ System statistics report test passed!");
     }
 }

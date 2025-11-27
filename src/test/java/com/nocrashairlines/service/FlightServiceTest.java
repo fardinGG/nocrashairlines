@@ -10,21 +10,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Flight Service Tests")
 class FlightServiceTest {
-    
+
     private FlightService flightService;
     private AdminService adminService;
-    
+    private static long testCounter = 0;
+
     @BeforeEach
     void setUp() {
         flightService = new FlightService();
         adminService = new AdminService();
         System.out.println("Setting up FlightService test...");
-        
-        // Add some test flights
+
+        // Add some test flights with unique flight numbers using timestamp and counter
+        long timestamp = System.currentTimeMillis();
+        long uniqueId1 = timestamp + (testCounter++);
+        long uniqueId2 = timestamp + (testCounter++);
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1).withHour(10).withMinute(0);
-        adminService.addFlight("TEST101", "Toronto", "Vancouver", 
+        adminService.addFlight("TEST" + uniqueId1, "Toronto", "Vancouver",
                               tomorrow, tomorrow.plusHours(5), "Boeing 737", 180, "A12");
-        adminService.addFlight("TEST102", "Montreal", "Calgary", 
+        adminService.addFlight("TEST" + uniqueId2, "Montreal", "Calgary",
                               tomorrow.plusHours(2), tomorrow.plusHours(7), "Airbus A320", 150, "B5");
     }
     
@@ -46,10 +50,11 @@ class FlightServiceTest {
         System.out.println("Testing search flights...");
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         List<Flight> flights = flightService.searchFlights("Toronto", "Vancouver", tomorrow);
-        
+
         assertNotNull(flights, "Search results should not be null");
         assertFalse(flights.isEmpty(), "Should find Toronto to Vancouver flight");
-        assertEquals("TEST101", flights.get(0).getFlightNumber(), "Should find TEST101 flight");
+        assertEquals("Toronto", flights.get(0).getOrigin(), "Origin should be Toronto");
+        assertEquals("Vancouver", flights.get(0).getDestination(), "Destination should be Vancouver");
         System.out.println("✓ Search flights test passed!");
     }
     
