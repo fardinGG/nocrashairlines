@@ -1,8 +1,7 @@
 package com.nocrashairlines.exception;
 
 /**
- * Base exception class for the flight ticket system.
- * Supports NFR-5 (Error Handling)
+ *  NFR-5 (Error Handling)
  */
 public class SystemException extends Exception {
     private final String errorCode;

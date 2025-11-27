@@ -215,11 +215,11 @@ public class AuthenticationService {
         
         return false;
     }
-    
+
     // Helper methods
-    
+
     private String generateUserId(String prefix) {
-        return prefix + "-" + System.currentTimeMillis() + "-" + 
+        return prefix + "-" + System.currentTimeMillis() + "-" +
                (int)(Math.random() * 1000);
     }
     

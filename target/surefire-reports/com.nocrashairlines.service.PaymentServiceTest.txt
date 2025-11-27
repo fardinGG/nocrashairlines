@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------
+Test set: com.nocrashairlines.service.PaymentServiceTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.016 s <<< FAILURE! -- in com.nocrashairlines.service.PaymentServiceTest
+com.nocrashairlines.service.PaymentServiceTest.testProcessRefund -- Time elapsed: 0.002 s <<< ERROR!
+[AUTH_ERROR] AuthenticationException: Email already registered (timestamp: 1764201085109)
+	at com.nocrashairlines.service.AuthenticationService.registerPassenger(AuthenticationService.java:41)
+	at com.nocrashairlines.service.PaymentServiceTest.setUp(PaymentServiceTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.nocrashairlines.service.PaymentServiceTest.testProcessPaymentDebitCard -- Time elapsed: 0.001 s <<< ERROR!
+[AUTH_ERROR] AuthenticationException: Email already registered (timestamp: 1764201085117)
+	at com.nocrashairlines.service.AuthenticationService.registerPassenger(AuthenticationService.java:41)
+	at com.nocrashairlines.service.PaymentServiceTest.setUp(PaymentServiceTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.nocrashairlines.service.PaymentServiceTest.testProcessPaymentCreditCard -- Time elapsed: 0.001 s <<< ERROR!
+[AUTH_ERROR] AuthenticationException: Email already registered (timestamp: 1764201085119)
+	at com.nocrashairlines.service.AuthenticationService.registerPassenger(AuthenticationService.java:41)
+	at com.nocrashairlines.service.PaymentServiceTest.setUp(PaymentServiceTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.nocrashairlines.service.PaymentServiceTest.testGetPaymentByBookingId -- Time elapsed: 0.001 s <<< ERROR!
+[AUTH_ERROR] AuthenticationException: Email already registered (timestamp: 1764201085120)
+	at com.nocrashairlines.service.AuthenticationService.registerPassenger(AuthenticationService.java:41)
+	at com.nocrashairlines.service.PaymentServiceTest.setUp(PaymentServiceTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

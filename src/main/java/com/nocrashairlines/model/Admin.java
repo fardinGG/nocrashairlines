@@ -1,7 +1,6 @@
 package com.nocrashairlines.model;
 
 /**
- * Represents an administrator in the system.
  * Supports FR-11 through FR-15 (Admin-related functional requirements)
  */
 public class Admin extends UserAccount {

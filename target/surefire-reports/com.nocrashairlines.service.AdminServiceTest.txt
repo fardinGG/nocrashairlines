@@ -1,0 +1,40 @@
+-------------------------------------------------------------------------------
+Test set: com.nocrashairlines.service.AdminServiceTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.017 s <<< FAILURE! -- in com.nocrashairlines.service.AdminServiceTest
+com.nocrashairlines.service.AdminServiceTest.testGeneratePassengerTrendsReport -- Time elapsed: 0.005 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Report should contain title ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+	at com.nocrashairlines.service.AdminServiceTest.testGeneratePassengerTrendsReport(AdminServiceTest.java:131)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.nocrashairlines.service.AdminServiceTest.testGenerateDailySalesReport -- Time elapsed: 0.005 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Report should contain title ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+	at com.nocrashairlines.service.AdminServiceTest.testGenerateDailySalesReport(AdminServiceTest.java:117)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.nocrashairlines.service.AdminServiceTest.testGenerateSystemStatisticsReport -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Report should contain title ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+	at com.nocrashairlines.service.AdminServiceTest.testGenerateSystemStatisticsReport(AdminServiceTest.java:145)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
