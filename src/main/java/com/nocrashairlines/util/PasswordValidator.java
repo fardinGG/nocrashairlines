@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class PasswordValidator {
     
     private static final int MIN_LENGTH = 8;
+    private static final int MAX_LENGTH = 64;
     private static final Pattern NUMBER_PATTERN = Pattern.compile(".*\\d.*");
     private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
     

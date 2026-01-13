@@ -4,9 +4,7 @@ import com.nocrashairlines.model.Payment;
 import java.util.*;
 
 /**
- * Mock implementation of PaymentGateway for testing and development.
- * In production, this would be replaced with actual payment gateway integration.
- * Supports FR-26 through FR-30 (Payment Gateway functional requirements)
+8 * Supports FR-26 through FR-30 (Payment Gateway functional requirements)
  */
 public class MockPaymentGateway implements PaymentGateway {
     

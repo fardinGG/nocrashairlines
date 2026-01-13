@@ -7,14 +7,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * In-memory database implementation for the flight ticket system.
- * Supports FR-21 through FR-25 (Database-related functional requirements)
- * In a production system, this would be replaced with actual database connections.
+ * FR-21 - FR-25
  */
 public class SystemDatabase {
     private static SystemDatabase instance;
     
-    // In-memory storage
+    // storage
     private final Map<String, Passenger> passengers;
     private final Map<String, Admin> admins;
     private final Map<String, AirlineStaff> airlineStaff;
@@ -23,7 +21,7 @@ public class SystemDatabase {
     private final Map<String, Payment> payments;
     private final List<TransactionLog> transactionLogs;
     
-    // Backup storage for NFR-4 (Data Backup & Recovery)
+    // Backup storage for NFR-4
     private Map<String, Object> backupData;
     private LocalDateTime lastBackupTime;
 
@@ -69,7 +67,7 @@ public class SystemDatabase {
         }
     }
 
-    // ==================== Passenger Operations ====================
+    // Passenger Operations 
     
     public boolean savePassenger(Passenger passenger) {
         if (passenger == null || passenger.getUserId() == null) {
@@ -113,7 +111,7 @@ public class SystemDatabase {
         return new ArrayList<>(passengers.values());
     }
 
-    // ==================== Admin Operations ====================
+    // Admin Operations 
     
     public boolean saveAdmin(Admin admin) {
         if (admin == null || admin.getUserId() == null) {
@@ -135,7 +133,7 @@ public class SystemDatabase {
                 .orElse(null);
     }
 
-    // ==================== Airline Staff Operations ====================
+    // Airline Staff Operations 
     
     public boolean saveAirlineStaff(AirlineStaff staff) {
         if (staff == null || staff.getUserId() == null) {
@@ -157,7 +155,7 @@ public class SystemDatabase {
                 .orElse(null);
     }
 
-    // ==================== Flight Operations ====================
+    // Flight Operations 
     
     public boolean saveFlight(Flight flight) {
         if (flight == null || flight.getFlightId() == null) {
@@ -211,7 +209,7 @@ public class SystemDatabase {
                 .collect(Collectors.toList());
     }
 
-    // ==================== Booking Operations ====================
+    //  Booking Operations
     
     public boolean saveBooking(Booking booking) {
         if (booking == null || booking.getBookingId() == null) {
@@ -252,7 +250,7 @@ public class SystemDatabase {
         return new ArrayList<>(bookings.values());
     }
 
-    // ==================== Payment Operations ====================
+    // Payment Operations 
     
     public boolean savePayment(Payment payment) {
         if (payment == null || payment.getPaymentId() == null) {
@@ -287,7 +285,7 @@ public class SystemDatabase {
         return new ArrayList<>(payments.values());
     }
 
-    // ==================== Transaction Log Operations (FR-23) ====================
+    // Transaction Log Operations (FR-23)
     
     private void logTransaction(String type, String entityId, String description) {
         TransactionLog log = new TransactionLog(type, entityId, description);
@@ -304,7 +302,7 @@ public class SystemDatabase {
                 .collect(Collectors.toList());
     }
 
-    // ==================== Backup & Recovery Operations (FR-24, NFR-4) ====================
+    // Backup & Recovery Operations (FR-24, NFR-4) 
     
     public void performBackup() {
         backupData = new HashMap<>();
@@ -354,7 +352,7 @@ public class SystemDatabase {
         return lastBackupTime;
     }
 
-    // ==================== Statistics for Reports (FR-15) ====================
+    // Statistics for Reports (FR-15)
     
     public Map<String, Object> getSystemStatistics() {
         Map<String, Object> stats = new HashMap<>();

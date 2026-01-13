@@ -9,7 +9,7 @@ import com.nocrashairlines.model.Payment;
 public interface PaymentGateway {
     
     /**
-     * Process a payment transaction
+     * Process  payment transaction
      * @param payment Payment object containing transaction details
      * @return PaymentResult containing success status and transaction reference
      */
